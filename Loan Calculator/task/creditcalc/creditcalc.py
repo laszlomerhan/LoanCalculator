@@ -1,31 +1,34 @@
 import math
 
-loan_principal = int(input('Enter your loan principal: '))
-calculate = input("""
+cal = input('''
 What do you want to calculate?
 type "n" for number of monthly payments,
 type "a" for annuity monthly payment amount,
-type "p" for loan principal:
-""")
+type "p" for loan principal: 
+''')
 
-a = p * ((i * (1 + i) ** n) / ((1 + i) ** n - 1))
-p = a / ((i * (1 + i) ** n) / ((1 + i) ** n - 1))
-n = math.log(1 + i)(a / a - (i * p))
-
-# if calculate == 'n':
-#     monthly_payment = int(input("Enter the monthly payment: "))
-#     payment = loan_principal / monthly_payment
-#     if payment > 1:
-#         print(f"It will take {round(payment)} months to repay the loan")
-#     else:
-#         print(f"It will take {int(payment)} month to repay the loan")
-# elif calculate == 'p':
-#     period = int(input("Enter the number of months: "))
-#     period_payment = math.ceil(loan_principal / period)
-#     last_payment = loan_principal - ((period - 1) * period_payment)
-#     if period >= 10:
-#         print("Your monthly payment = {}".format(round(period_payment)))
-#     else:
-#         print(f"Your monthly payment = {period_payment} and the last payment = {last_payment}")
-
-if calculate == 'a':
+if cal == 'n':
+    p = float(input('Enter the loan principal: '))
+    m_p = int(input('Enter the monthly payment: '))
+    l_i = float(input('Enter the loan interest: '))
+    n_i_r = l_i / (12 * 100)
+    n_m = math.log((m_p / (m_p - (n_i_r * p))), 1 + n_i_r)
+    if n_m / 12 != 1:
+        x = divmod(math.ceil(n_m), 12)
+        print('It will take {} years and {} months to repay this loan!'.format(x[0], x[1]))
+    else:
+        print(f'It will take 1 year to repay this loan!')
+elif cal == 'a':
+    p = float(input('Enter the loan principal: '))
+    n_p = int(input('Enter the number of periods: '))
+    l_i = float(input('Enter the loan interest: '))
+    i = l_i / (12 * 100)
+    a = p * (i * math.pow(1 + i, n_p)) / (math.pow(1 + i, n_p) - 1)
+    print(f'Your monthly payment = {math.ceil(a)}!')
+elif cal == 'p':
+    a = float(input('Enter the annuity payment: '))
+    n_p = int(input('Enter the number of periods: '))
+    l_i = float(input('Enter the loan interest: '))
+    i = l_i / (12 * 100)
+    p = a / ((i * math.pow((1 + i), n_p)) / (math.pow((1 + i), n_p) - 1))
+    print(f'Your loan principal = {round(p)}!')
